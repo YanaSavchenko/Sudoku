@@ -13,7 +13,10 @@ class GridPageContainer extends React.Component {
             <div className='GridPageContainer'>
                 <GridPage
                     grid         = {grid.array}
-                    onInputValue = {this.props.inputValue.bind(this)} />
+                    status       = {grid.status}
+
+                    onInputValue = {this.props.inputValue.bind(this)}
+                    onClear      = {this.props.clear.bind(this)} />
             </div>
         );
     }
@@ -22,9 +25,8 @@ class GridPageContainer extends React.Component {
 function mapStateToProps(state) {
     return {
         grid: {
-            array:   state.grid,
-            history: state.history,
-            status:  state.status
+            array:  state.grid,
+            status: state.status
         }
     };
 }
@@ -33,6 +35,10 @@ function mapDispatchToProps(dispatch) {
     return {
         inputValue: (row, col, value) => {
             dispatch(actions.grid.inputValue(row, col, value));
+        },
+
+        clear: () => {
+            dispatch(actions.grid.clear());
         }
     };
 }

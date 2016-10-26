@@ -6,15 +6,22 @@ import Grid        from '../other/Grid.jsx';
 export default class GridPage extends React.Component {
     render() {
         const {
-            grid
+            grid,
+            status,
+
+            onInputValue,
+            onClear
         } = this.props;
 
         return (
             <div className='GridPage'>
-                <GridButtons />
+                <GridButtons
+                    onClear = {onClear} />
+
                 <Grid
                     grid         = {grid}
-                    onInputValue = {this.props.onInputValue} />
+                    isSolved     = {status.isSolved}
+                    onInputValue = {onInputValue} />
             </div>
         );
     }
