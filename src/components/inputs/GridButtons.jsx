@@ -4,7 +4,8 @@ import { ButtonToolbar, Button } from 'react-bootstrap';
 export default class GridButtons extends React.Component {
     render() {
         const {
-            onClear
+            onClear,
+            onUndo
         } = this.props;
 
         return (
@@ -12,7 +13,8 @@ export default class GridButtons extends React.Component {
                 <ButtonToolbar className='buttons'>
                     <Button
                         className = 'undoButton'
-                        bsStyle   = 'primary'>
+                        bsStyle   = 'primary'
+                        onClick   = {onUndo}>
                             Undo
                     </Button>
 

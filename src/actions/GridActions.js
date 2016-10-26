@@ -16,5 +16,11 @@ export default {
         return {
             type: ec.GRID_CLEAR
         };
+    },
+
+    undo() {
+        return {
+            type: ec.GRID_UNDO
+        }
     }
 };
