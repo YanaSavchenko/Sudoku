@@ -15,7 +15,10 @@ export default class StartPage extends React.Component {
                     Start great adventure right now !
                 </div>
 
-                <Button className='startButton'>
+                <Button
+                    className = 'startButton'
+                    bsStyle   = 'primary'
+                    onClick   = {this.props.onStart}>
                     I am ready
                 </Button>
             </div>
