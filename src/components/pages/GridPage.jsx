@@ -10,13 +10,15 @@ export default class GridPage extends React.Component {
             status,
 
             onInputValue,
-            onClear
+            onClear,
+            onUndo
         } = this.props;
 
         return (
             <div className='GridPage'>
                 <GridButtons
-                    onClear = {onClear} />
+                    onClear = {onClear}
+                    onUndo  = {onUndo} />
 
                 <Grid
                     grid         = {grid}

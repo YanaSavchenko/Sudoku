@@ -16,7 +16,8 @@ class GridPageContainer extends React.Component {
                     status       = {grid.status}
 
                     onInputValue = {this.props.inputValue.bind(this)}
-                    onClear      = {this.props.clear.bind(this)} />
+                    onClear      = {this.props.clear.bind(this)}
+                    onUndo       = {this.props.undo.bind(this)} />
             </div>
         );
     }
@@ -39,6 +40,10 @@ function mapDispatchToProps(dispatch) {
 
         clear: () => {
             dispatch(actions.grid.clear());
+        },
+
+        undo: () => {
+            dispatch(actions.grid.undo());
         }
     };
 }
