@@ -13,21 +13,21 @@ import routes   from './routes.jsx';
 import thunk                             from 'redux-thunk';
 import { Provider }                      from 'react-redux';
 import { createStore, applyMiddleware  } from 'redux';
-// import reducer                           from './reducers';
+import reducer                           from './reducers';
 
 $(document).ready(function() {
-    // const store = createStore(
-    //     reducer,
-    //     applyMiddleware(thunk)
-    // );
+    const store = createStore(
+        reducer,
+        applyMiddleware(thunk)
+    );
 
     ReactDOM.render(
-        // <Provider store={store}>
+        <Provider store={store}>
             <Router
                 createElement = {(Component, props) => <Component {...props} />}
                 routes        = {routes}
-                history       = {hashHistory} />,
-        // </Provider>,
+                history       = {hashHistory} />
+        </Provider>,
         document.getElementById('content')
     );
 });
