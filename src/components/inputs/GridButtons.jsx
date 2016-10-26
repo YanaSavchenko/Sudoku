@@ -3,6 +3,10 @@ import { ButtonToolbar, Button } from 'react-bootstrap';
 
 export default class GridButtons extends React.Component {
     render() {
+        const {
+            onClear
+        } = this.props;
+
         return (
             <div className='GridButtons'>
                 <ButtonToolbar className='buttons'>
@@ -14,7 +18,8 @@ export default class GridButtons extends React.Component {
 
                     <Button
                         className = 'clearButton'
-                        bsStyle   = 'primary'>
+                        bsStyle   = 'primary'
+                        onClick   = {onClear}>
                             Clear
                     </Button>
 
