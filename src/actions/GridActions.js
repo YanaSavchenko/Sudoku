@@ -10,5 +10,11 @@ export default {
                 value
             }
         };
+    },
+
+    clear() {
+        return {
+            type: ec.GRID_CLEAR
+        };
     }
 };
