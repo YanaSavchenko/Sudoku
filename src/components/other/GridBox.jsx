@@ -16,22 +16,25 @@ export default class GridBox extends React.Component {
     renderInput() {
         const {
             row,
-            col
+            col,
+            isSolved,
+            value
         } = this.props;
 
         const borderValue = '1px solid';
 
         const style = {
             borderRight:  ( !this._isEdge(col) && this._isThird(col) ) ? borderValue : '0px',
-            borderBottom: ( !this._isEdge(row) && this._isThird(row) ) ? borderValue : '0px'
+            borderBottom: ( !this._isEdge(row) && this._isThird(row) ) ? borderValue : '0px',
+            fontWeight:   this.state.isFixed ? 'bold' : ''
         };
 
         return (
             <input
                 ref      = 'input'
                 style    = {style}
-                disabled = {this.state.isFixed || this.props.isSolved}
-                value    = {this.props.value || ''} />
+                disabled = {this.state.isFixed || isSolved}
+                value    = {value || ''} />
         );
     }
 
