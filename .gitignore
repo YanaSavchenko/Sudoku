@@ -1,0 +1,4 @@
+node_modules/
+public/main.js
+npm-debug.log
+public/config.js
