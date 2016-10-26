@@ -14,8 +14,10 @@ const initialState = {
         [3, 0, 0, 9, 0, 2, 0, 0, 5]
     ],
 
-    isSolved: false,
-    isEdited: false,
+    status: {
+        isSolved: false,
+        isEdited: false
+    },
 
     history: []
 };
@@ -32,3 +34,13 @@ export default function grid( state = initialState, action) {
     }
 }
 /*eslint-enable */
+
+function inputValue(state, data) {
+    const updatedState = _.cloneDeep(state);
+
+    updatedState.grid[data.row][data.col] = data.value;
+    updatedState.status.isEdited = true;
+    updatedState.history.push(updatedState);
+
+    return updatedState;
+}
