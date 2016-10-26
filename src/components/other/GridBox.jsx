@@ -13,6 +13,16 @@ export default class GridBox extends React.Component {
         };
     }
 
+    handleChange(e) {
+        const range = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        const isEmpty = e.target.value === '';
+        const value = isEmpty ? 0 : parseInt(e.target.value, 10);
+
+        if ( range.indexOf(value) > -1 || isEmpty ) {
+            this.props.onInputValue(this.props.row, this.props.col, value);
+        }
+    }
+
     renderInput() {
         const {
             row,
@@ -31,10 +41,10 @@ export default class GridBox extends React.Component {
 
         return (
             <input
-                ref      = 'input'
                 style    = {style}
                 disabled = {this.state.isFixed || isSolved}
-                value    = {value || ''} />
+                value    = {value || ''}
+                onChange = {this.handleChange.bind(this)} />
         );
     }
 
