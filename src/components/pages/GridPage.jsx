@@ -1,18 +1,20 @@
 import React from 'react';
 
 import GridButtons from '../inputs/GridButtons.jsx';
-import Grid        from '../other/Grid.jsx';
+import Grid from '../other/Grid.jsx';
 
 export default class GridPage extends React.Component {
     render() {
         const {
             grid,
             status,
+            errors,
 
             onInputValue,
             onClear,
             onUndo,
-            onSolve
+            onSolve,
+            onCheck
         } = this.props;
 
         return (
@@ -20,10 +22,12 @@ export default class GridPage extends React.Component {
                 <GridButtons
                     onClear = {onClear}
                     onUndo  = {onUndo}
-                    onSolve = {onSolve} />
+                    onSolve = {onSolve}
+                    onCheck = {onCheck} />
 
                 <Grid
                     grid         = {grid}
+                    errors       = {errors}
                     isSolved     = {status.isSolved}
                     onInputValue = {onInputValue} />
             </div>
