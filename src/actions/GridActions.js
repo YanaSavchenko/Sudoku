@@ -21,6 +21,12 @@ export default {
     undo() {
         return {
             type: ec.GRID_UNDO
-        }
+        };
+    },
+
+    solve() {
+        return {
+            type: ec.GRID_SOLVE
+        };
     }
 };
