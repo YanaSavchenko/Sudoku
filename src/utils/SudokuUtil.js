@@ -2,10 +2,6 @@ const SQUARE_SIZE = 3;
 
 // using Backtracking algorithm
 function getSolution(grid, rowIndex = 0, colIndex = 0) {
-    if ( !_isInRange(rowIndex) || !_isInRange(colIndex) ) {
-        throw 'WRONG_GRID_SIZE';
-    }
-
     if ( grid[rowIndex][colIndex] ) {
         return _goNextBox(grid, rowIndex, colIndex);
     }
