@@ -1,4 +1,5 @@
 import React from 'react';
+import _     from 'lodash';
 
 import './GridBox.less';
 
@@ -26,8 +27,17 @@ export default class GridBox extends React.Component {
             row,
             col,
             isSolved,
-            value
+            value,
+            errors
         } = this.props;
+
+        let hasError;
+
+        errors.forEach( errorIndex => {
+            if ( _.isEqual(errorIndex, [row, col]) ) {
+                hasError = true;
+            }
+        });
 
         const borderValue = '1px solid';
 
@@ -37,6 +47,10 @@ export default class GridBox extends React.Component {
             fontWeight:      this.state.isFixed ? 'bold' : '',
             backgroundColor: this.state.isFixed ? '#8ebfe8' : ''
         };
+
+        if ( hasError ) {
+            style.background = 'repeating-linear-gradient(45deg, white, white 5px, #ff7474 10px, #ff7474 10px)';
+        }
 
         return (
             <td className='GridBox'>
