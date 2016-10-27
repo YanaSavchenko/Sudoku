@@ -1,5 +1,7 @@
-import ec from '../eventConstants';
 import _  from 'lodash';
+import ec from '../eventConstants';
+
+import sudokuUtil from '../utils/sudokuUtil.js';
 
 const initialState = {
     grid: [
@@ -26,7 +28,7 @@ const initialState = {
 export default function grid( state = initialState, action) {
     switch (action.type) {
         case ec.GRID_INPUT_VALUE: return inputValue(state, action.data);
-        case ec.GRID_CLEAR:       return clear(state);
+        case ec.GRID_CLEAR:       return clear();
         case ec.GRID_UNDO:        return undo(state);
         case ec.GRID_SOLVE:       return solve(state);
 
@@ -46,12 +48,8 @@ function inputValue(state, data) {
     return updatedState;
 }
 
-function clear(state) {
-    if ( state.status.isEdited ) {
-        return _.cloneDeep(state.history[0]);
-    }
-
-    return state;
+function clear() {
+    return _.cloneDeep(initialState);
 }
 
 function undo(state) {
@@ -60,4 +58,18 @@ function undo(state) {
     }
 
     return state;
+}
+
+function solve(state) {
+    const updatedState = _.cloneDeep(state);
+    const originalGrid = _.cloneDeep(initialState.grid);
+
+    sudokuUtil.getSolution(originalGrid);
+
+    updatedState.grid = originalGrid;
+    updatedState.status.isEdited = false;
+    updatedState.status.isSolved = true;
+    updatedState.history = [];
+
+    return updatedState;
 }
