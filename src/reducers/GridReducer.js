@@ -1,6 +1,6 @@
 import _  from 'lodash';
-import ec from '../eventConstants';
 
+import ec         from '../eventConstants';
 import sudokuUtil from '../utils/sudokuUtil.js';
 
 const initialState = {
