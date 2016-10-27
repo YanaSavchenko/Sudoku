@@ -28,5 +28,11 @@ export default {
         return {
             type: ec.GRID_SOLVE
         };
+    },
+
+    check() {
+        return {
+            type: ec.GRID_CHECK
+        };
     }
 };
