@@ -1,5 +1,19 @@
 const SQUARE_SIZE = 3;
 
+function checkSolution(userGrid, solution) {
+    const wrongValues = [];
+
+    for ( let row = 0; row < userGrid.length; row++ ) {
+        for ( let col = 0; col < userGrid[0].length; col++ ) {
+            if ( userGrid[row][col] && ( userGrid[row][col] !== solution[row][col] ) ) {
+                wrongValues.push([row, col]);
+            }
+        }
+    }
+
+    return wrongValues;
+}
+
 // using Backtracking algorithm
 function getSolution(grid, rowIndex = 0, colIndex = 0) {
     if ( grid[rowIndex][colIndex] ) {
@@ -24,10 +38,6 @@ function getSolution(grid, rowIndex = 0, colIndex = 0) {
     grid[rowIndex][colIndex] = 0;
 
     return false;
-}
-
-function _isInRange(index) {
-    return ( ( index >= 0 ) && ( index <= 8 ) );
 }
 
 function _isInRow(row, value) {
@@ -89,5 +99,6 @@ function _getNextBoxIndex(rowIndex, colIndex) {
 }
 
 module.exports = {
+    checkSolution,
     getSolution
 };
