@@ -5,7 +5,8 @@ export default class GridButtons extends React.Component {
     render() {
         const {
             onClear,
-            onUndo
+            onUndo,
+            onSolve
         } = this.props;
 
         return (
@@ -33,7 +34,8 @@ export default class GridButtons extends React.Component {
 
                     <Button
                         className = 'solveButton'
-                        bsStyle   = 'primary'>
+                        bsStyle   = 'primary'
+                        onClick   = {onSolve}>
                             Solve
                     </Button>
                 </ButtonToolbar>
