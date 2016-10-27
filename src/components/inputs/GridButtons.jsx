@@ -6,7 +6,8 @@ export default class GridButtons extends React.Component {
         const {
             onClear,
             onUndo,
-            onSolve
+            onSolve,
+            onCheck
         } = this.props;
 
         return (
@@ -28,7 +29,8 @@ export default class GridButtons extends React.Component {
 
                     <Button
                         className = 'checkButton'
-                        bsStyle   = 'primary'>
+                        bsStyle   = 'primary'
+                        onClick   = {onCheck}>
                             Check
                     </Button>
 
