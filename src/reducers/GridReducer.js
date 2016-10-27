@@ -21,7 +21,9 @@ const initialState = {
         isEdited: false
     },
 
-    history: []
+    solution: null,
+    errors:   [],
+    history:  []
 };
 
 /*eslint-disable */
@@ -31,6 +33,7 @@ export default function grid( state = initialState, action) {
         case ec.GRID_CLEAR:       return clear();
         case ec.GRID_UNDO:        return undo(state);
         case ec.GRID_SOLVE:       return solve(state);
+        case ec.GRID_CHECK:       return check(state);
 
         default: return state;
     }
@@ -44,6 +47,10 @@ function inputValue(state, data) {
 
     updatedState.grid[data.row][data.col] = data.value;
     updatedState.status.isEdited = true;
+
+    _.remove(updatedState.errors, function(errorIndex) {
+        return ( ( errorIndex[0] === data.row ) && ( errorIndex[1] === data.col ) );
+    });
 
     return updatedState;
 }
@@ -69,7 +76,24 @@ function solve(state) {
     updatedState.grid = originalGrid;
     updatedState.status.isEdited = false;
     updatedState.status.isSolved = true;
+    updatedState.solution = updatedState.solution || originalGrid;
+    updatedState.errors = [];
     updatedState.history = [];
+
+    return updatedState;
+}
+
+function check(state) {
+    const updatedState = _.cloneDeep(state);
+
+    if ( !updatedState.solution ) {
+        const originalGrid = _.cloneDeep(initialState.grid);
+
+        sudokuUtil.getSolution(originalGrid);
+        updatedState.solution = originalGrid;
+    }
+
+    updatedState.errors = sudokuUtil.checkSolution(updatedState.grid, updatedState.solution);
 
     return updatedState;
 }
