@@ -6,24 +6,22 @@ function getSolution(grid, rowIndex = 0, colIndex = 0) {
         throw 'WRONG_GRID_SIZE';
     }
 
-    if ( !grid[rowIndex][colIndex] ) {
-        for ( let i = 1; i < 10; i++ ) {
-            if (
-                !_isInRow(grid[rowIndex], i) &&
-                !_isInCol(grid, colIndex, i) &&
-                !_isInSquare(grid, rowIndex, colIndex, i)
-            ) {
-                grid[rowIndex][colIndex] = i;
-
-                if ( _goNextBox(grid, rowIndex, colIndex) ) {
-                    return true;
-                }
-            }
-        }
-    }
-
     if ( grid[rowIndex][colIndex] ) {
         return _goNextBox(grid, rowIndex, colIndex);
+    }
+
+    for ( let i = 1; i < 10; i++ ) {
+        if (
+            !_isInRow(grid[rowIndex], i) &&
+            !_isInCol(grid, colIndex, i) &&
+            !_isInSquare(grid, rowIndex, colIndex, i)
+        ) {
+            grid[rowIndex][colIndex] = i;
+
+            if ( _goNextBox(grid, rowIndex, colIndex) ) {
+                return true;
+            }
+        }
     }
 
     // if sudoku is unsolvable, leave box empty
@@ -47,12 +45,14 @@ function _isInCol(grid, colIndex, value) {
 }
 
 function _isInSquare(grid, rowIndex, colIndex, value) {
-    const rowIndexs = _getSquareIndexes(rowIndex);
-    const colIndexs = _getSquareIndexes(colIndex);
+    const rowIndexes = _getSquareIndexes(rowIndex);
+    const colIndexes = _getSquareIndexes(colIndex);
 
-    for ( let i = 0; i < rowIndexs.lenght; i++ ) {
-        if ( grid[rowIndexs[i]][colIndexs[i]] === value ) {
-            return true;
+    for ( let row = 0; row < rowIndexes.length; row++ ) {
+        for ( let col = 0; col < colIndexes.length; col++ ) {
+            if ( grid[rowIndexes[row]][colIndexes[col]] === value ) {
+                return true;
+            }
         }
     }
 
