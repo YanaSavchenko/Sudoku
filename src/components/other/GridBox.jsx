@@ -1,7 +1,5 @@
 import React from 'react';
 
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-
 import './GridBox.less';
 
 export default class GridBox extends React.Component {
@@ -23,7 +21,7 @@ export default class GridBox extends React.Component {
         }
     }
 
-    renderInput() {
+    render() {
         const {
             row,
             col,
@@ -40,32 +38,12 @@ export default class GridBox extends React.Component {
         };
 
         return (
-            <input
-                style    = {style}
-                disabled = {this.state.isFixed || isSolved}
-                value    = {value || ''}
-                onChange = {this.handleChange.bind(this)} />
-        );
-    }
-
-    render() {
-        return (
             <td className='GridBox'>
-                {
-                    this.props.isSolved ?
-                        (
-                            <ReactCSSTransitionGroup
-                                transitionName          = 'solved'
-                                transitionAppear
-                                transitionEnterTimeout  = {200}
-                                transitionLeaveTimeout  = {200}
-                                transitionAppearTimeout = {200}>
-                                    this.renderInput()
-                            </ReactCSSTransitionGroup>
-                        )
-
-                        : this.renderInput()
-                }
+                <input
+                    style    = {style}
+                    disabled = {this.state.isFixed || isSolved}
+                    value    = {value || ''}
+                    onChange = {this.handleChange.bind(this)} />
             </td>
         );
     }
