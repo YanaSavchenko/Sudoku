@@ -32,9 +32,10 @@ export default class GridBox extends React.Component {
         const borderValue = '1px solid';
 
         const style = {
-            borderRight:  ( !this._isEdge(col) && this._isThird(col) ) ? borderValue : '0px',
-            borderBottom: ( !this._isEdge(row) && this._isThird(row) ) ? borderValue : '0px',
-            fontWeight:   this.state.isFixed ? 'bold' : ''
+            borderRight:     ( !this._isEdge(col) && this._isThird(col) ) ? borderValue : '0px',
+            borderBottom:    ( !this._isEdge(row) && this._isThird(row) ) ? borderValue : '0px',
+            fontWeight:      this.state.isFixed ? 'bold' : '',
+            backgroundColor: this.state.isFixed ? '#8ebfe8' : ''
         };
 
         return (
