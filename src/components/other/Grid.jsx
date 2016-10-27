@@ -16,11 +16,10 @@ export default class Grid extends React.Component {
     renderBox(row, value, col) {
         return (
             <GridBox
-                key      = {col}
-                row      = {row}
-                col      = {col}
-                value    = {value}
-                isSolved = {this.props.isSolved}
+                key   = {col}
+                row   = {row}
+                col   = {col}
+                value = {value}
                 {...this.props} />
         );
     }
