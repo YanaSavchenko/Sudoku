@@ -12,6 +12,14 @@ export default class GridBox extends React.Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        if ( nextProps.isGenerated ) {
+            this.setState({
+                isFixed: nextProps.value
+            });
+        }
+    }
+
     handleChange(e) {
         const range = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         const isEmpty = e.target.value === '';
