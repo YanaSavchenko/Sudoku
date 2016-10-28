@@ -19,7 +19,12 @@ const initialState = {
     },
 
     solution: initialSudoku.solution,
-    errors:   [],
+
+    errors: {
+        grid:    [],
+        general: null
+    },
+
     history:  []
 };
 
@@ -49,7 +54,7 @@ function inputValue(state, data) {
     updatedState.status.isEdited = true;
     updatedState.status.isGenerated = false;
 
-    _.remove(updatedState.errors, errorIndex => {
+    _.remove(updatedState.errors.grid, errorIndex => {
         return ( ( errorIndex[0] === data.row ) && ( errorIndex[1] === data.col ) );
     });
 
@@ -60,9 +65,13 @@ function clear(state) {
     const updatedState = _.cloneDeep(state);
 
     updatedState.grid = updatedState.status.isCustom ? sudokuUtil.getEmptyGrid() : initialSudoku.grid;
-    updatedState.solution = updatedState.status.isCustom ? sudokuUtil.getEmptyGrid() : initialSudoku.solution;
+    updatedState.solution = updatedState.status.isCustom ? null : initialSudoku.solution;
+
     updatedState.status.isSolved = false;
     updatedState.status.isGenerated = false;
+
+    updatedState.errors.grid = [];
+    updatedState.errors.general = null;
 
     return _.cloneDeep(updatedState);
 }
@@ -80,23 +89,33 @@ function solve(state) {
 
     _updateHistory(updatedState);
 
+    updatedState.status.isSolved = true;
+    updatedState.status.isEdited = true;
+    updatedState.status.isGenerated = false;
+
+    updatedState.errors.grid = [];
+    updatedState.errors.general = null;
+
     if ( !updatedState.solution ) {
         const originalGrid = updatedState.status.isCustom ?
             _.cloneDeep(updatedState.grid) :
             _.cloneDeep(initialState.grid);
 
-        sudokuUtil.getSolution(originalGrid);
+        try {
+            sudokuUtil.getSolution(originalGrid);
+        } catch (e) {
+            updatedState.errors.general = e;
+        }
 
         updatedState.grid = originalGrid;
-        updatedState.solution = originalGrid;
+
+        if ( !updatedState.status.isCustom ) {
+            updatedState.solution = originalGrid;
+        }
     } else {
         updatedState.grid = updatedState.solution;
     }
 
-    updatedState.status.isSolved = true;
-    updatedState.status.isEdited = true;
-    updatedState.status.isGenerated = false;
-    updatedState.errors = [];
     return updatedState;
 }
 
@@ -106,11 +125,16 @@ function check(state) {
     if ( !updatedState.solution ) {
         const originalGrid = _.cloneDeep(initialState.grid);
 
-        sudokuUtil.getSolution(originalGrid);
+        try {
+            sudokuUtil.getSolution(originalGrid);
+        } catch (e) {
+            updatedState.errors.general = e;
+        }
+
         updatedState.solution = originalGrid;
     }
 
-    updatedState.errors = sudokuUtil.checkSolution(updatedState.grid, updatedState.solution);
+    updatedState.errors.grid = sudokuUtil.checkSolution(updatedState.grid, updatedState.solution);
 
     return updatedState;
 }
