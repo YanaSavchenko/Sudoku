@@ -34,5 +34,11 @@ export default {
         return {
             type: ec.GRID_CHECK
         };
+    },
+
+    generate() {
+        return {
+            type: ec.GRID_GENERATE
+        };
     }
 };
