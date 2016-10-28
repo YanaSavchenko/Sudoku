@@ -4,10 +4,13 @@ import { ButtonToolbar, Button } from 'react-bootstrap';
 export default class GridButtons extends React.Component {
     render() {
         const {
+            isEdited,
+
             onClear,
             onUndo,
             onSolve,
-            onCheck
+            onCheck,
+            onGenerate
         } = this.props;
 
         return (
@@ -16,21 +19,24 @@ export default class GridButtons extends React.Component {
                     <Button
                         className = 'undoButton'
                         bsStyle   = 'primary'
-                        onClick   = {onUndo}>
+                        onClick   = {onUndo}
+                        disabled  = {!isEdited}>
                             Undo
                     </Button>
 
                     <Button
                         className = 'clearButton'
                         bsStyle   = 'primary'
-                        onClick   = {onClear}>
+                        onClick   = {onClear}
+                        disabled  = {!isEdited}>
                             Clear
                     </Button>
 
                     <Button
                         className = 'checkButton'
                         bsStyle   = 'primary'
-                        onClick   = {onCheck}>
+                        onClick   = {onCheck}
+                        disabled  = {!isEdited}>
                             Check
                     </Button>
 
@@ -39,6 +45,13 @@ export default class GridButtons extends React.Component {
                         bsStyle   = 'primary'
                         onClick   = {onSolve}>
                             Solve
+                    </Button>
+
+                    <Button
+                        className = 'newGrid'
+                        bsStyle   = 'primary'
+                        onClick   = {onGenerate}>
+                            New
                     </Button>
                 </ButtonToolbar>
             </div>
