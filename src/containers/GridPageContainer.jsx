@@ -6,6 +6,18 @@ import { connect } from 'react-redux';
 import GridPage from '../components/pages/GridPage.jsx';
 
 class GridPageContainer extends React.Component {
+    componentWillMount() {
+        this.props.stopEditing();
+
+        if ( this.props.location.pathname === '/help' ) {
+            this.props.help();
+        }
+    }
+
+    redirectToMenu() {
+        this.context.router.push('/');
+    }
+
     render() {
         const grid = this.props.grid;
 
@@ -21,7 +33,8 @@ class GridPageContainer extends React.Component {
                     onUndo       = {this.props.undo.bind(this)}
                     onSolve      = {this.props.solve.bind(this)}
                     onCheck      = {this.props.check.bind(this)}
-                    onGenerate   = {this.props.generate.bind(this)} />
+                    onGenerate   = {this.props.generate.bind(this)}
+                    onMenu       = {this.redirectToMenu.bind(this)} />
             </div>
         );
     }
@@ -61,8 +74,20 @@ function mapDispatchToProps(dispatch) {
 
         generate: () => {
             dispatch(actions.grid.generate());
+        },
+
+        stopEditing: () => {
+            dispatch(actions.grid.stopEditing());
+        },
+
+        help: () => {
+            dispatch(actions.grid.help());
         }
     };
 }
+
+GridPageContainer.contextTypes = {
+    router: React.PropTypes.object
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(GridPageContainer);
