@@ -5,39 +5,37 @@ export default class GridButtons extends React.Component {
     render() {
         const {
             isEdited,
+            isCustom,
 
             onClear,
             onUndo,
             onSolve,
             onCheck,
-            onGenerate
+            onGenerate,
+            onMenu
         } = this.props;
+
+        const triggeredButtonStyle = isEdited ? 'primary' : 'default';
+        const style = {
+            display: isCustom ? 'none' : ''
+        };
 
         return (
             <div className='GridButtons'>
                 <ButtonToolbar className='buttons'>
                     <Button
-                        className = 'undoButton'
+                        className = 'menuButton'
                         bsStyle   = 'primary'
-                        onClick   = {onUndo}
-                        disabled  = {!isEdited}>
-                            Undo
+                        onClick   = {onMenu}>
+                            Menu
                     </Button>
 
                     <Button
-                        className = 'clearButton'
+                        className = 'newGridButton'
                         bsStyle   = 'primary'
-                        onClick   = {onClear}
-                        disabled  = {!isEdited}>
-                            Clear
-                    </Button>
-
-                    <Button
-                        className = 'checkButton'
-                        bsStyle   = 'primary'
-                        onClick   = {onCheck}
-                        disabled  = {!isEdited}>
-                            Check
+                        style     = {style}
+                        onClick   = {onGenerate}>
+                            New
                     </Button>
 
                     <Button
@@ -48,10 +46,28 @@ export default class GridButtons extends React.Component {
                     </Button>
 
                     <Button
-                        className = 'newGrid'
-                        bsStyle   = 'primary'
-                        onClick   = {onGenerate}>
-                            New
+                        className = 'undoButton'
+                        bsStyle   = {triggeredButtonStyle}
+                        onClick   = {onUndo}
+                        disabled  = {!isEdited}>
+                            Undo
+                    </Button>
+
+                    <Button
+                        className = 'clearButton'
+                        bsStyle   = {triggeredButtonStyle}
+                        onClick   = {onClear}
+                        disabled  = {!isEdited}>
+                            Clear
+                    </Button>
+
+                    <Button
+                        className = 'checkButton'
+                        bsStyle   = {triggeredButtonStyle}
+                        style     = {style}
+                        onClick   = {onCheck}
+                        disabled  = {!isEdited}>
+                            Check
                     </Button>
                 </ButtonToolbar>
             </div>
