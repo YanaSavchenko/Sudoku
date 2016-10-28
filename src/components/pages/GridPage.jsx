@@ -1,7 +1,8 @@
 import React from 'react';
 
-import GridButtons from '../inputs/GridButtons.jsx';
-import Grid from '../other/Grid.jsx';
+import GridButtons  from '../inputs/GridButtons.jsx';
+import Grid         from '../other/Grid.jsx';
+import ErrorMessage from '../other/ErrorMessage.jsx';
 
 import './GridPage.less';
 
@@ -36,10 +37,17 @@ export default class GridPage extends React.Component {
 
                 <Grid
                     grid         = {grid}
-                    errors       = {errors}
+                    errors       = {errors.grid}
                     isSolved     = {status.isSolved}
                     isGenerated  = {status.isGenerated}
                     onInputValue = {onInputValue} />
+
+                {
+                    errors.general ?
+                        <ErrorMessage
+                            error = {errors.general} />
+                        : null
+                }
             </div>
         );
     }
