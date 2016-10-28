@@ -6,8 +6,8 @@ const NUMBERS     = _.range(1, 10);  // array [1-9]
 const PERCENT_OF_FIXED_BOXES = 0.32; // % of boxes are known
 
 function generate() {
-    let solution = _getEmptyGrid();
-    let grid     = _getEmptyGrid();
+    let solution = getEmptyGrid();
+    let grid     = getEmptyGrid();
 
     for ( let rowIndex = 0; rowIndex < GRID_SIZE; rowIndex++ ) {
         for ( let colIndex = 0; colIndex < GRID_SIZE; colIndex++ ) {
@@ -25,13 +25,26 @@ function generate() {
                 // so to get first gridBox should set colIndex to -1
                 rowIndex = 0;
                 colIndex = -1;
-                solution = _getEmptyGrid();
-                grid     = _getEmptyGrid();
+                solution = getEmptyGrid();
+                grid     = getEmptyGrid();
             }
         }
     }
 
     return { grid, solution };
+}
+
+function getEmptyGrid() {
+    const grid = [];
+
+    for ( let row = 0; row < GRID_SIZE; row++ ) {
+        grid.push([]);
+        for ( let col = 0; col < GRID_SIZE; col++ ) {
+            grid[row].push(0);
+        }
+    }
+
+    return grid;
 }
 
 function checkSolution(userGrid, solution) {
@@ -132,18 +145,7 @@ function _getNextBoxIndex(rowIndex, colIndex) {
     return [0, 0];
 }
 
-function _getEmptyGrid() {
-    const grid = [];
 
-    for ( let row = 0; row < GRID_SIZE; row++ ) {
-        grid.push([]);
-        for ( let col = 0; col < GRID_SIZE; col++ ) {
-            grid[row].push(0);
-        }
-    }
-
-    return grid;
-}
 
 function _getAvailableValues( grid, rowIndex, colIndex ) {
     const availableValues = [];
@@ -164,5 +166,6 @@ function _getAvailableValues( grid, rowIndex, colIndex ) {
 module.exports = {
     checkSolution,
     getSolution,
-    generate
+    generate,
+    getEmptyGrid
 };
