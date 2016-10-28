@@ -17,18 +17,22 @@ export default class GridPage extends React.Component {
             onUndo,
             onSolve,
             onCheck,
-            onGenerate
+            onGenerate,
+            onMenu
         } = this.props;
 
         return (
             <div className='GridPage'>
                 <GridButtons
                     isEdited   = {status.isEdited}
+                    isCustom   = {status.isCustom}
+
                     onClear    = {onClear}
                     onUndo     = {onUndo}
                     onSolve    = {onSolve}
                     onCheck    = {onCheck}
-                    onGenerate = {onGenerate} />
+                    onGenerate = {onGenerate}
+                    onMenu     = {onMenu} />
 
                 <Grid
                     grid         = {grid}
