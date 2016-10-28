@@ -63,22 +63,19 @@ function checkSolution(userGrid, solution) {
 
 // using Backtracking algorithm
 function getSolution(grid, rowIndex = 0, colIndex = 0) {
+    _checkFixedCopies(grid);
+
     if ( grid[rowIndex][colIndex] ) {
         return _goNextBox(grid, rowIndex, colIndex);
     }
+
     for ( let i = 0; i < NUMBERS.length; i++ ) {
-        if (
-            !_isInRow(grid[rowIndex], NUMBERS[i]) &&
-            !_isInCol(grid, colIndex, NUMBERS[i]) &&
-            !_isInSquare(grid, rowIndex, colIndex, NUMBERS[i])
-        ) {
+        if ( _isValidValue(grid, rowIndex, colIndex, NUMBERS[i]) ) {
             grid[rowIndex][colIndex] = NUMBERS[i];
 
             if ( _goNextBox(grid, rowIndex, colIndex) ) {
                 return true;
             }
-
-            throw 'UNSOLVABLE';
         }
     }
 
@@ -86,6 +83,37 @@ function getSolution(grid, rowIndex = 0, colIndex = 0) {
     grid[rowIndex][colIndex] = 0;
 
     return false;
+}
+
+// check if default grid has no conflicts
+function _checkFixedCopies(grid) {
+    for ( let rowIndex = 0; rowIndex < grid.length; rowIndex++ ) {
+        for ( let colIndex = 0; colIndex < grid[0].length; colIndex++ ) {
+            const currentValue = grid[rowIndex][colIndex];
+
+            // remove conflict with itself
+            grid[rowIndex][colIndex] = 0;
+
+            if (
+                currentValue &&
+                !_isValidValue(grid, rowIndex, colIndex, currentValue)
+            ) {
+                grid[rowIndex][colIndex] = currentValue;
+
+                throw 'UNSOLVABLE';
+            }
+
+            grid[rowIndex][colIndex] = currentValue;
+        }
+    }
+}
+
+function _isValidValue(grid, rowIndex, colIndex, value) {
+    return (
+        !_isInRow(grid[rowIndex], value) &&
+        !_isInCol(grid, colIndex, value) &&
+        !_isInSquare(grid, rowIndex, colIndex, value)
+    );
 }
 
 function _isInRow(row, value) {
@@ -147,17 +175,11 @@ function _getNextBoxIndex(rowIndex, colIndex) {
     return [0, 0];
 }
 
-
-
 function _getAvailableValues( grid, rowIndex, colIndex ) {
     const availableValues = [];
 
     NUMBERS.forEach( value => {
-        if (
-            !_isInRow(grid[rowIndex], value) &&
-            !_isInCol(grid, colIndex, value) &&
-            !_isInSquare(grid, rowIndex, colIndex, value)
-        ) {
+        if ( _isValidValue( grid, rowIndex, colIndex, value ) ) {
             availableValues.push(value);
         }
     });
