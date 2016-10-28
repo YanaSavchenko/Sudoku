@@ -40,5 +40,17 @@ export default {
         return {
             type: ec.GRID_GENERATE
         };
+    },
+
+    stopEditing() {
+        return {
+            type: ec.GRID_STOP_EDITING
+        };
+    },
+
+    help() {
+        return {
+            type: ec.GRID_HELP
+        };
     }
 };
