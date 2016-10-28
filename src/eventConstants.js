@@ -3,5 +3,6 @@ module.exports = {
     GRID_SOLVE:       'GRID_SOLVE',
     GRID_UNDO:        'GRID_UNDO',
     GRID_CLEAR:       'GRID_CLEAR',
-    GRID_CHECK:       'GRID_CHECK'
+    GRID_CHECK:       'GRID_CHECK',
+    GRID_GENERATE:    'GRID_GENERATE'
 };
