@@ -19,7 +19,14 @@ export default class StartPage extends React.Component {
                     className = 'startButton'
                     bsStyle   = 'primary'
                     onClick   = {this.props.onStart}>
-                    I am ready
+                        I am ready to play
+                </Button>
+
+                <Button
+                    className = 'solveButton'
+                    bsStyle   = 'primary'
+                    onClick   = {this.props.onHelp}>
+                        Need help with custom sudoku
                 </Button>
             </div>
         );
