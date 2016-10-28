@@ -20,7 +20,8 @@ class GridPageContainer extends React.Component {
                     onClear      = {this.props.clear.bind(this)}
                     onUndo       = {this.props.undo.bind(this)}
                     onSolve      = {this.props.solve.bind(this)}
-                    onCheck      = {this.props.check.bind(this)} />
+                    onCheck      = {this.props.check.bind(this)}
+                    onGenerate   = {this.props.generate.bind(this)} />
             </div>
         );
     }
@@ -56,6 +57,10 @@ function mapDispatchToProps(dispatch) {
 
         check: () => {
             dispatch(actions.grid.check());
+        },
+
+        generate: () => {
+            dispatch(actions.grid.generate());
         }
     };
 }
