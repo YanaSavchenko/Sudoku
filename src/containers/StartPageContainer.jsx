@@ -3,15 +3,16 @@ import React from 'react';
 import StartPage from '../components/pages/StartPage.jsx';
 
 export default class StartPageContainer extends React.Component {
-    start() {
-        this.context.router.push('/game');
+    redirect(url) {
+        this.context.router.push(url);
     }
 
     render() {
         return (
             <div className='StartPageContainer'>
                 <StartPage
-                    onStart = {this.start.bind(this)} />
+                    onStart = {this.redirect.bind(this, '/game')}
+                    onHelp  = {this.redirect.bind(this, '/help')} />
             </div>
         );
     }
