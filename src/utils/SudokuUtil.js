@@ -1,4 +1,38 @@
+import _  from 'lodash';
+
 const SQUARE_SIZE = 3;
+const GRID_SIZE   = 9;
+const NUMBERS     = _.range(1, 10);  // array [1-9]
+const PERCENT_OF_FIXED_BOXES = 0.32; // % of boxes are known
+
+function generate() {
+    let solution = _getEmptyGrid();
+    let grid     = _getEmptyGrid();
+
+    for ( let rowIndex = 0; rowIndex < GRID_SIZE; rowIndex++ ) {
+        for ( let colIndex = 0; colIndex < GRID_SIZE; colIndex++ ) {
+            const availableValues = _getAvailableValues(solution, rowIndex, colIndex);
+            const value = availableValues[ Math.floor( Math.random() * availableValues.length ) ];
+
+            if ( value ) {
+                solution[rowIndex][colIndex] = value;
+
+                const isFixed = Math.random() < PERCENT_OF_FIXED_BOXES;
+
+                grid[rowIndex][colIndex] = isFixed ? value : 0;
+            } else {
+                // should start over. after current for-loop colIndex will be increased
+                // so to get first gridBox should set colIndex to -1
+                rowIndex = 0;
+                colIndex = -1;
+                solution = _getEmptyGrid();
+                grid     = _getEmptyGrid();
+            }
+        }
+    }
+
+    return { grid, solution };
+}
 
 function checkSolution(userGrid, solution) {
     const wrongValues = [];
@@ -19,14 +53,13 @@ function getSolution(grid, rowIndex = 0, colIndex = 0) {
     if ( grid[rowIndex][colIndex] ) {
         return _goNextBox(grid, rowIndex, colIndex);
     }
-
-    for ( let i = 1; i < 10; i++ ) {
+    for ( let i = 0; i < NUMBERS.length; i++ ) {
         if (
-            !_isInRow(grid[rowIndex], i) &&
-            !_isInCol(grid, colIndex, i) &&
-            !_isInSquare(grid, rowIndex, colIndex, i)
+            !_isInRow(grid[rowIndex], NUMBERS[i]) &&
+            !_isInCol(grid, colIndex, NUMBERS[i]) &&
+            !_isInSquare(grid, rowIndex, colIndex, NUMBERS[i])
         ) {
-            grid[rowIndex][colIndex] = i;
+            grid[rowIndex][colIndex] = NUMBERS[i];
 
             if ( _goNextBox(grid, rowIndex, colIndex) ) {
                 return true;
@@ -89,16 +122,47 @@ function _goNextBox(grid, rowIndex, colIndex) {
 }
 
 function _getNextBoxIndex(rowIndex, colIndex) {
-    if ( rowIndex < 8 ) {
+    // using GRID_SIZE - 1 as an edge point because index starts from 0, not 1
+    if ( rowIndex < GRID_SIZE - 1 ) {
         return [ rowIndex + 1, colIndex ];
-    } else if ( colIndex < 8 ) {
+    } else if ( colIndex < GRID_SIZE - 1 ) {
         return [ 0, colIndex + 1 ];
     }
 
     return [0, 0];
 }
 
+function _getEmptyGrid() {
+    const grid = [];
+
+    for ( let row = 0; row < GRID_SIZE; row++ ) {
+        grid.push([]);
+        for ( let col = 0; col < GRID_SIZE; col++ ) {
+            grid[row].push(0);
+        }
+    }
+
+    return grid;
+}
+
+function _getAvailableValues( grid, rowIndex, colIndex ) {
+    const availableValues = [];
+
+    NUMBERS.forEach( value => {
+        if (
+            !_isInRow(grid[rowIndex], value) &&
+            !_isInCol(grid, colIndex, value) &&
+            !_isInSquare(grid, rowIndex, colIndex, value)
+        ) {
+            availableValues.push(value);
+        }
+    });
+
+    return availableValues;
+}
+
 module.exports = {
     checkSolution,
-    getSolution
+    getSolution,
+    generate
 };
