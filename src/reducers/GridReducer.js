@@ -3,25 +3,19 @@ import _  from 'lodash';
 import ec         from '../eventConstants';
 import sudokuUtil from '../utils/sudokuUtil.js';
 
+let initialSudoku = sudokuUtil.generate();
+
 const initialState = {
-    grid: [
-        [8, 0, 0, 4, 0, 6, 0, 0, 7],
-        [0, 0, 0, 0, 0, 0, 4, 0, 0],
-        [0, 1, 0, 0, 0, 0, 6, 5, 0],
-        [5, 0, 9, 0, 3, 0, 7, 8, 0],
-        [0, 0, 0, 0, 7, 0, 0, 0, 0],
-        [0, 4, 8, 0, 2, 0, 1, 0, 3],
-        [0, 5, 2, 0, 0, 0, 0, 9, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0],
-        [3, 0, 0, 9, 0, 2, 0, 0, 5]
-    ],
+    grid: initialSudoku.grid,
 
     status: {
-        isSolved: false,
-        isEdited: false
+        isSolved:    false,
+        isEdited:    false,
+        // flag for GridBox that state should be updated
+        isGenerated: false
     },
 
-    solution: null,
+    solution: initialSudoku.solution,
     errors:   [],
     history:  []
 };
@@ -30,10 +24,11 @@ const initialState = {
 export default function grid( state = initialState, action) {
     switch (action.type) {
         case ec.GRID_INPUT_VALUE: return inputValue(state, action.data);
-        case ec.GRID_CLEAR:       return clear();
+        case ec.GRID_CLEAR:       return clear(state);
         case ec.GRID_UNDO:        return undo(state);
         case ec.GRID_SOLVE:       return solve(state);
         case ec.GRID_CHECK:       return check(state);
+        case ec.GRID_GENERATE:    return generate();
 
         default: return state;
     }
@@ -47,16 +42,24 @@ function inputValue(state, data) {
 
     updatedState.grid[data.row][data.col] = data.value;
     updatedState.status.isEdited = true;
+    updatedState.status.isGenerated = false;
 
-    _.remove(updatedState.errors, function(errorIndex) {
+    _.remove(updatedState.errors, errorIndex => {
         return ( ( errorIndex[0] === data.row ) && ( errorIndex[1] === data.col ) );
     });
 
     return updatedState;
 }
 
-function clear() {
-    return _.cloneDeep(initialState);
+function clear(state) {
+    const updatedState = _.cloneDeep(state);
+
+    updatedState.grid = initialSudoku.grid;
+    updatedState.solution = initialSudoku.solution;
+    updatedState.status.isSolved = false
+    updatedState.status.isGenerated = false
+
+    return _.cloneDeep(updatedState);
 }
 
 function undo(state) {
@@ -69,16 +72,23 @@ function undo(state) {
 
 function solve(state) {
     const updatedState = _.cloneDeep(state);
-    const originalGrid = _.cloneDeep(initialState.grid);
 
-    sudokuUtil.getSolution(originalGrid);
+    updatedState.history.push(_.cloneDeep(updatedState));
 
-    updatedState.grid = originalGrid;
-    updatedState.status.isEdited = false;
+    if ( !updatedState.solution ) {
+        const originalGrid = _.cloneDeep(initialState.grid);
+
+        sudokuUtil.getSolution(originalGrid);
+        updatedState.grid = originalGrid.grid;
+        updatedState.solution = originalGrid.solution;
+    } else {
+        updatedState.grid = updatedState.solution;
+    }
+
     updatedState.status.isSolved = true;
-    updatedState.solution = updatedState.solution || originalGrid;
+    updatedState.status.isEdited = true;
+    updatedState.status.isGenerated = false;
     updatedState.errors = [];
-    updatedState.history = [];
 
     return updatedState;
 }
@@ -94,6 +104,17 @@ function check(state) {
     }
 
     updatedState.errors = sudokuUtil.checkSolution(updatedState.grid, updatedState.solution);
+
+    return updatedState;
+}
+
+function generate() {
+    const updatedState = _.cloneDeep(initialState);
+    initialSudoku = sudokuUtil.generate();
+
+    updatedState.grid               = initialSudoku.grid;
+    updatedState.solution           = initialSudoku.solution;
+    updatedState.status.isGenerated = true;
 
     return updatedState;
 }
