@@ -77,6 +77,8 @@ function getSolution(grid, rowIndex = 0, colIndex = 0) {
             if ( _goNextBox(grid, rowIndex, colIndex) ) {
                 return true;
             }
+
+            throw 'UNSOLVABLE';
         }
     }
 
