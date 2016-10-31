@@ -3,7 +3,7 @@
 
 Built with React, Redux, Webpack.
 
-Demo - https://yanasavchenko.github.io/Sudoku/
+Demo - https://yanasavchenko.github.io/sudoku/
 
 ## HOW TO START
 1. npm install
