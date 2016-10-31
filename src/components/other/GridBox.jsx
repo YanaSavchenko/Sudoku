@@ -64,6 +64,7 @@ export default class GridBox extends React.Component {
             <td className='GridBox'>
                 <input
                     style    = {style}
+                    type     = 'number'
                     disabled = {this.state.isFixed || isSolved}
                     value    = {value || ''}
                     onChange = {this.handleChange.bind(this)} />
