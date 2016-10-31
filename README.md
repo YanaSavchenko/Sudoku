@@ -1,8 +1,9 @@
 # SIMPLE SUDOKU GAME
 ------------------------------------
 
-Built with React, Redux, Webpack.  
-Demo - https://yanasavchenko.github.io
+Built with React, Redux, Webpack.
+
+Demo - https://yanasavchenko.github.io/Sudoku/
 
 ## HOW TO START
 1. npm install
@@ -12,4 +13,4 @@ Demo - https://yanasavchenko.github.io
 ## CREATE BUILD
 1. npm install
 2. nmp run build
-3. folder "public" contains production version. Just open public/index.html in browser
+3. root folder contains production version. Just open index.html in browser
