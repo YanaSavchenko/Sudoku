@@ -26,7 +26,7 @@ export default class StartPage extends React.Component {
                     className = 'solveButton'
                     bsStyle   = 'primary'
                     onClick   = {this.props.onHelp}>
-                        Need help with custom sudoku
+                        Custom sudoku
                 </Button>
             </div>
         );

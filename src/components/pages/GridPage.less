@@ -1,12 +1,19 @@
 .GridPage {
+    padding: 100px;
+
     .GridButtons {
         button {
-            margin: 14vh 10px 20px 10px;
+            margin: 0px 10px 20px 10px;
+            min-width: 70px;
         }
     }
 
     .Grid, .GridButtons, .ErrorMessage {
         margin:  auto;
         display: table;
+    }
+
+    @media screen and (max-width : 600px) {
+        padding: 30px 10px 0px 10px;
     }
 }
