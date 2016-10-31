@@ -8,17 +8,15 @@ window.React = React;
 window.$     = window.jQuery = $;
 
 import { Router, hashHistory } from 'react-router';
-import routes   from './routes.jsx';
+import routes                  from './routes.jsx';
 
-import thunk                             from 'redux-thunk';
-import { Provider }                      from 'react-redux';
-import { createStore, applyMiddleware  } from 'redux';
-import reducer                           from './reducers';
+import { Provider }    from 'react-redux';
+import { createStore } from 'redux';
+import reducer         from './reducers';
 
 $(document).ready(function() {
     const store = createStore(
-        reducer,
-        applyMiddleware(thunk)
+        reducer
     );
 
     ReactDOM.render(
