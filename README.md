@@ -1,7 +1,7 @@
 # SIMPLE SUDOKU GAME
 ------------------------------------
 
-Built with React, Redux, Webpack.
+Built with React, Redux, Webpack.  
 Demo - https://yanasavchenko.github.io
 
 ## HOW TO START
