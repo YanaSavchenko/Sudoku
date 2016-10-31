@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "build": "set NODE_ENV='production' & webpack -p",
-    "devserver": "webpack-dev-server --debug --hot --inline --content-base public --port 8090 --host 0.0.0.0",
+    "devserver": "webpack-dev-server --debug --hot --inline --content-base --port 8090 --host 0.0.0.0",
     "lint": "eslint src"
   },
   "dependencies": {
