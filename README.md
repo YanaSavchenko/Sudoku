@@ -12,5 +12,5 @@ Demo - https://yanasavchenko.github.io/sudoku/
 
 ## CREATE BUILD
 1. npm install
-2. nmp run build
+2. npm run build
 3. root folder contains production version. Just open index.html in browser
